@@ -23,7 +23,7 @@ function preload() { // Load the image file
 
 
 function setup() {
-  createCanvas(730, 730);
+  createCanvas(100%, 730);
   noStroke();
   colorMode(HSB);
   background(0);
