@@ -3,7 +3,8 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Animated Circle</title>
+  <title>Artist Portfolio</title>
+  <link rel="stylesheet" href="style.css" />
   <style>
     html, body {
       margin: 0;
@@ -19,11 +20,41 @@
       top: 0;
       left: 0;
       z-index: -1;
+      pointer-events: none;
     }
   </style>
 </head>
 <body>
   <canvas id="canvas"></canvas>
+
+  <div class="container">
+    <nav class="sidebar">
+      <ul>
+        <li><a href="#about">About</a></li>
+        <li><a href="#works">Selected Works</a></li>
+        <li><a href="#cv">CV</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+    <main class="content">
+      <section id="about">
+        <h1>About</h1>
+        <p>This is a simple artist portfolio site.</p>
+      </section>
+      <section id="works">
+        <h1>Selected Works</h1>
+        <p>Images and descriptions of selected artwork go here.</p>
+      </section>
+      <section id="cv">
+        <h1>CV</h1>
+        <p>Curriculum Vitae information goes here.</p>
+      </section>
+      <section id="contact">
+        <h1>Contact</h1>
+        <p>Contact details or form goes here.</p>
+      </section>
+    </main>
+  </div>
 
   <script>
     const canvas = document.getElementById('canvas');
@@ -50,8 +81,7 @@
       ctx.fillStyle = 'yellow';
       ctx.fillRect(0, 0, width, height);
 
-      // Animate the circle up and down
-      let offset = Math.sin(time) * 20; // 20px vertical range
+      let offset = Math.sin(time) * 20; // up/down animation
 
       ctx.beginPath();
       ctx.arc(centerX, centerY + offset, radius, 0, Math.PI * 2);
