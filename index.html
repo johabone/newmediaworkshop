@@ -1,74 +1,71 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Blue Circle Animation Background</title>
-<style>
-  html, body {
-    margin: 0; padding: 0;
-    height: 100%; width: 100%;
-    overflow: hidden;
-    background: yellow;
-  }
-  canvas {
-    position: fixed;
-    top: 0; left: 0;
-    width: 100vw; height: 100vh;
-    z-index: -1;
-    display: block;
-  }
-</style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Animated Circle</title>
+  <style>
+    html, body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+      width: 100%;
+      overflow: hidden;
+      background: yellow;
+    }
+    canvas {
+      display: block;
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+  </style>
 </head>
 <body>
-<canvas id="bgCanvas"></canvas>
+  <canvas id="canvas"></canvas>
 
-<script>
-  const canvas = document.getElementById('bgCanvas');
-  const ctx = canvas.getContext('2d');
+  <script>
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
 
-  let width, height;
-  let circleY;
-  let direction = 1;
-  let speed = 1;
-  const radius = 50;
-  let centerX;
+    let width, height;
+    const PPI = 96; // Pixels per inch
+    const circumferenceInches = 1;
+    const radius = (circumferenceInches / (2 * Math.PI)) * PPI; // ≈15.26px
 
-  function resize() {
-    width = window.innerWidth;
-    height = window.innerHeight;
-    canvas.width = width;
-    canvas.height = height;
-    centerX = width / 2;
-    circleY = height / 2;
-  }
+    let centerX, centerY;
+    let time = 0;
 
-  function animate() {
-    ctx.clearRect(0, 0, width, height);
+    function resizeCanvas() {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      canvas.width = width;
+      canvas.height = height;
+      centerX = width / 2;
+      centerY = height / 2;
+    }
 
-    // Yellow background
-    ctx.fillStyle = 'yellow';
-    ctx.fillRect(0, 0, width, height);
+    function animate() {
+      ctx.fillStyle = 'yellow';
+      ctx.fillRect(0, 0, width, height);
 
-    // Blue circle
-    ctx.beginPath();
-    ctx.arc(centerX, circleY, radius, 0, Math.PI * 2);
-    ctx.fillStyle = 'blue';
-    ctx.fill();
-    ctx.closePath();
+      // Animate the circle up and down
+      let offset = Math.sin(time) * 20; // 20px vertical range
 
-    // Move circle up and down
-    circleY += speed * direction;
-    if (circleY > height - radius) direction = -1;
-    if (circleY < radius) direction = 1;
+      ctx.beginPath();
+      ctx.arc(centerX, centerY + offset, radius, 0, Math.PI * 2);
+      ctx.fillStyle = 'blue';
+      ctx.fill();
+      ctx.closePath();
 
-    requestAnimationFrame(animate);
-  }
+      time += 0.02;
+      requestAnimationFrame(animate);
+    }
 
-  window.addEventListener('resize', resize);
-
-  resize();
-  animate();
-</script>
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+    animate();
+  </script>
 </body>
 </html>
